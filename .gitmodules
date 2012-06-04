@@ -1,3 +1,6 @@
 [submodule "AppList"]
 	path = AppList
 	url = https://github.com/rpetrich/AppList.git
+[submodule "theos"]
+	path = theos
+	url = https://github.com/DHowett/theos.git
