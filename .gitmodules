@@ -1,0 +1,3 @@
+[submodule "AppList"]
+	path = AppList
+	url = https://github.com/rpetrich/AppList.git

@@ -1,6 +1,5 @@
-#import <Applist/AppList.h>
+#import "Applist/AppList.h"
 #import "NSTask.h"
-#import "UIProgressHUD.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface RootViewController: UITableViewController {
