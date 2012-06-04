@@ -1,0 +1,9 @@
+Package: com.cykey.class-dump
+Name: Class-Dump
+Depends: applist
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Class-dump-z GUI
+Maintainer: Cykey
+Author: Cykey
+Section: Utilities
