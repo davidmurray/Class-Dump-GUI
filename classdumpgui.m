@@ -15,6 +15,7 @@
 -(void)dumpBinaryAtPath:(NSString *)path binaryName:(NSString *)binaryName;
 -(void)dumpCustomBinary;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+
 @end
 
 @implementation CDGViewController
@@ -34,9 +35,7 @@
     
     if (!isDir && !exists) {
         
-        
         [[NSFileManager defaultManager] createDirectoryAtPath:@"/var/mobile/ClassDump/" withIntermediateDirectories:NO attributes:nil error:NULL];
-        
     }
     
     UIBarButtonItem *customBinaryButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(dumpCustomBinary)];
@@ -114,7 +113,7 @@
 
 -(void)dumpCustomBinary {
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Custom Binary" message:[NSString stringWithFormat:@"Enter a Path to a Binary you want to Dump"] delegate:self cancelButtonTitle:@"Dump" otherButtonTitles:@"Cancel",nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Custom Binary" message:[NSString stringWithFormat:@"Enter a Path to a Binary you want to Dump"] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Dump",nil];
     av.alertViewStyle = UIAlertViewStylePlainTextInput;
     [av show];
     [av release];
