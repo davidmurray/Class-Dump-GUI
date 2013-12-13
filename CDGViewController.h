@@ -13,7 +13,6 @@
 -(void)getApp:(NSString *)bundleID;
 -(void)dumpBinaryAtPath:(NSString *)path binaryName:(NSString *)binaryName;
 -(void)dumpCustomBinary;
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 @end
 
