@@ -1,7 +1,6 @@
 #import "CDGViewController.h"
 #import "NSTask.h"
 
-
 @implementation CDGViewController
 
 - (void)viewDidLoad

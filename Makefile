@@ -1,7 +1,7 @@
 export GO_EASY_ON_ME=1
 
 APPLICATION_NAME = classdumpgui
-classdumpgui_FILES = classdumpgui.m CDGViewController.m
+classdumpgui_FILES = classdumpgui.m CDGViewController.m CDGAppDelegate.m
 classdumpgui_FRAMEWORKS = UIKit CoreGraphics QuartzCore
 classdumpgui_PRIVATE_FRAMEWORKS = Preferences
 classdumpgui_CFLAGS = -I./Headers/
