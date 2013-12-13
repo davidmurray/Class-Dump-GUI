@@ -5,7 +5,6 @@
 @interface CDGViewController : UITableViewController <UIAlertViewDelegate> {
 @private
 	ALApplicationTableDataSource *dataSource;
-    ALApplicationList *al;
     UIProgressHUD *HUD;
     NSString *appDisplayName;
 }

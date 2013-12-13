@@ -7,6 +7,10 @@
 {
     [super viewDidLoad];
 
+    dataSource = [[ALApplicationTableDataSource alloc] init];
+    NSString *sectionDescriptorsPath = [[NSBundle mainBundle] pathForResource:@"com.jack.cdg.settings" ofType:@"plist"];
+    dataSource.sectionDescriptors = [NSArray arrayWithContentsOfFile:sectionDescriptorsPath];
+
     BOOL isDir = FALSE;
 
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/ClassDump" isDirectory:&isDir];
@@ -30,17 +34,6 @@
     return YES;
 }
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        dataSource = [[ALApplicationTableDataSource alloc] init];
-        NSString *sectionDescriptorsPath = [[NSBundle mainBundle] pathForResource:@"com.jack.cdg.settings" ofType:@"plist"];
-        dataSource.sectionDescriptors = [NSArray arrayWithContentsOfFile:sectionDescriptorsPath];
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     dataSource.tableView = nil;
@@ -53,7 +46,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     NSString *displayIdentifier = [dataSource displayIdentifierForIndexPath:indexPath];
-    al = [ALApplicationList sharedApplicationList];
 
     [self getApp:displayIdentifier];
 
@@ -61,7 +53,7 @@
 
 -(void)getApp:(NSString *)bundleID {
 
-    NSString *binaryToDump = [al valueForKeyPath:@"bundle.executablePath" forDisplayIdentifier:bundleID];
+    NSString *binaryToDump = [[ALApplicationList sharedApplicationList] valueForKeyPath:@"bundle.executablePath" forDisplayIdentifier:bundleID];
 
     NSString *binaryName = [binaryToDump lastPathComponent];
 
@@ -105,9 +97,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-    NSString *buttonTitle = [alertView buttonTitleAtIndex:buttonIndex];
-
-    if ([buttonTitle isEqualToString:@"Dump"]) {
+    if (buttonIndex == 1) {
 
         UITextField *pathField = [alertView textFieldAtIndex:0];
 
