@@ -1,13 +1,16 @@
-export TARGET_CC = xcrun -sdk iphoneos clang
-export TARGET_CXX = xcrun -sdk iphoneos clang
-export TARGET_LD = xcrun -sdk iphoneos clang
+export GO_EASY_ON_ME=1
+
+APPLICATION_NAME = classdumpgui
+classdumpgui_FILES = classdumpgui.m
+classdumpgui_FRAMEWORKS = UIKit CoreGraphics QuartzCore
+classdumpgui_PRIVATE_FRAMEWORKS = Preferences
+classdumpgui_CFLAGS = -I./Headers/
+classdumpgui_LDFLAGS = -L./lib/
+classdumpgui_LIBRARIES = applist
+
+TARGET_IPHONEOS_DEPLOYMENT_VERSION = 5.0
+
+ARCHS = armv7
 
 include theos/makefiles/common.mk
-
-APPLICATION_NAME = ClassDump
-ClassDump_FILES = main.m ClassDumpApplication.mm RootViewController.m
-ClassDump_FRAMEWORKS = UIKit Foundation CoreGraphics QuartzCore
-ClassDump_LIBRARIES = applist
-ClassDump_LDFLAGS = -lapplist
-
-include $(THEOS_MAKE_PATH)/application.mk
+include theos/makefiles/application.mk
