@@ -3,15 +3,11 @@
 #import "UIProgressHUD.h"
 
 @interface CDGViewController : UITableViewController <UIAlertViewDelegate> {
-@private
-	ALApplicationTableDataSource *dataSource;
-	UIProgressHUD *HUD;
-	NSString *appDisplayName;
+	ALApplicationTableDataSource *_dataSource;
 }
 
--(void)getApp:(NSString *)bundleID;
--(void)dumpBinaryAtPath:(NSString *)path binaryName:(NSString *)binaryName;
--(void)dumpCustomBinary;
+-(void)_dumpBinaryAtPath:(NSString *)path;
+-(void)_customBinaryButtonWasTapped;
 
 @end
 

@@ -7,25 +7,36 @@
 {
 	[super viewDidLoad];
 
-	dataSource = [[ALApplicationTableDataSource alloc] init];
-	dataSource.sectionDescriptors = [ALApplicationTableDataSource standardSectionDescriptors];
+	_dataSource = [[ALApplicationTableDataSource alloc] init];
+	[_dataSource setSectionDescriptors:[ALApplicationTableDataSource standardSectionDescriptors]];
 
-	BOOL isDir = FALSE;
+	if (![[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/ClassDump/"]) {
+		NSError *error;
+    	[[NSFileManager defaultManager] createDirectoryAtPath:@"/var/mobile/ClassDump/" withIntermediateDirectories:NO attributes:nil error:&error];
 
-	BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:@"/var/mobile/ClassDump" isDirectory:&isDir];
+    	if (error) {
+			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Couldn't create directory" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 
-	if (!isDir && !exists) {
+			[alertView show];
+			[alertView release];
+    	}
+    }
 
-		[[NSFileManager defaultManager] createDirectoryAtPath:@"/var/mobile/ClassDump/" withIntermediateDirectories:NO attributes:nil error:NULL];
-	}
+	UIBarButtonItem *customBinaryButton = [[UIBarButtonItem alloc] initWithTitle:@"Custom Binary" style:UIBarButtonItemStylePlain target:self action:@selector(_customBinaryButtonWasTapped)];
 
-	UIBarButtonItem *customBinaryButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(dumpCustomBinary)];
+	[self setTitle:@"Class Dump GUI"];
+	[[self tableView] setDataSource:_dataSource];
+	[_dataSource setTableView:[self tableView]];
 
-	self.title = @"Class Dump GUI";
-	self.tableView.dataSource = dataSource;
-	dataSource.tableView = self.tableView;
+	[[self navigationItem] setRightBarButtonItem:customBinaryButton];
+	[customBinaryButton release];
+}
 
-	self.navigationItem.rightBarButtonItem = customBinaryButton;
+- (void)dealloc
+{
+	[_dataSource setTableView:nil];
+	[_dataSource release];
+	[super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -33,34 +44,20 @@
 	return YES;
 }
 
-- (void)dealloc
-{
-	dataSource.tableView = nil;
-	[dataSource release];
-	[super dealloc];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-	NSString *displayIdentifier = [dataSource displayIdentifierForIndexPath:indexPath];
+	NSString *displayIdentifier = [_dataSource displayIdentifierForIndexPath:indexPath];
+	NSString *binaryPath = [[ALApplicationList sharedApplicationList] valueForKeyPath:@"bundle.executablePath" forDisplayIdentifier:displayIdentifier];
 
-	[self getApp:displayIdentifier];
-
+	[self _dumpBinaryAtPath:binaryPath];
 }
 
--(void)getApp:(NSString *)bundleID {
-
-	NSString *binaryToDump = [[ALApplicationList sharedApplicationList] valueForKeyPath:@"bundle.executablePath" forDisplayIdentifier:bundleID];
-
-	NSString *binaryName = [binaryToDump lastPathComponent];
-
-	[self dumpBinaryAtPath:binaryToDump binaryName:binaryName];
-}
-
-- (void)dumpBinaryAtPath:(NSString *)path binaryName:(NSString *)binaryName
+- (void)_dumpBinaryAtPath:(NSString *)path
 {
+	NSString *binaryName = [path lastPathComponent];
+
 	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
 		NSTask *task = [[NSTask alloc] init];
 		[task setLaunchPath:[[NSBundle mainBundle] pathForResource:@"class-dump-z" ofType:nil inDirectory:nil]];
@@ -68,19 +65,19 @@
 		[task launch];
 		[task release];
 
-		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"Your Dumped Headers have been placed at: /var/mobile/ClassDump/%@", binaryName] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"Your dumped headers have been placed at: /var/mobile/ClassDump/%@", binaryName] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
 
 		[alertView show];
 		[alertView release];
 	} else {
-		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed to Dump" message:@"Failed to Dump: File not Found" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Failed to Dump" message:@"Failed to Dump: file not Found" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
 		[alertView show];
 		[alertView release];
 	}
 
 }
 
-- (void)dumpCustomBinary
+- (void)_customBinaryButtonWasTapped
 {
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Custom Binary" message:@"Enter a path to a binary you want to dump" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Dump",nil];
 	[alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -95,7 +92,7 @@
 	if (buttonIndex == 1) {
 		UITextField *textField = [alertView textFieldAtIndex:0];
 
-		[self dumpBinaryAtPath:[textField text] binaryName:[[textField text] lastPathComponent]];
+		[self _dumpBinaryAtPath:[textField text]];
 	}
 
 }

@@ -5,29 +5,32 @@
 
 - (id)init
 {
-	if ((self = [super init])) {
-		window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-		navigationController = [[UINavigationController alloc] init];
-		viewController = [[CDGViewController alloc] initWithStyle:UITableViewStylePlain];
+	self = [super init];
+	if (self) {
+		_window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+		_navigationController = [[UINavigationController alloc] init];
+		_viewController = [[CDGViewController alloc] initWithStyle:UITableViewStylePlain];
 	}
+
 	return self;
 }
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-	if ([window respondsToSelector:@selector(setRootViewController:)])
-		[window setRootViewController:navigationController];
+	if ([_window respondsToSelector:@selector(setRootViewController:)])
+		[_window setRootViewController:_navigationController];
 	else
-		[window addSubview:[navigationController view]];
-	[navigationController pushViewController:viewController animated:NO];
-	[window makeKeyAndVisible];
+		[_window addSubview:[_navigationController view]];
+	[_navigationController pushViewController:_viewController animated:NO];
+	[_window makeKeyAndVisible];
 }
 
 - (void)dealloc
 {
-	[viewController release];
-	[navigationController release];
-	[window release];
+	[_viewController release];
+	[_navigationController release];
+	[_window release];
+
 	[super dealloc];
 }
 

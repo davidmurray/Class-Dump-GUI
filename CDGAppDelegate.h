@@ -2,12 +2,10 @@
 
 @class CDGViewController;
 
-@interface CDGAppDelegate : NSObject<UIApplicationDelegate> {
-@private
-
-	UIWindow *window;
-	UINavigationController *navigationController;
-	CDGViewController *viewController;
+@interface CDGAppDelegate : NSObject <UIApplicationDelegate> {
+	UIWindow *_window;
+	UINavigationController *_navigationController;
+	CDGViewController *_viewController;
 }
 
 @end
