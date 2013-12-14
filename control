@@ -1,0 +1,9 @@
+Package: me.cykey.class-dump.gui
+Name: Class-Dump GUI
+Version: 0.1
+Architecture: iphoneos-arm
+Description: Easily class-dump applications!
+Maintainer: Cykey <cykey@live.ca>
+Author: Cykey <cykey@live.ca>
+Depends: applist
+Section: System

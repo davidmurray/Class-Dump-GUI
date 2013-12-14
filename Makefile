@@ -1,12 +1,10 @@
 export GO_EASY_ON_ME=1
 
-APPLICATION_NAME = classdumpgui
-classdumpgui_FILES = classdumpgui.m CDGViewController.m CDGAppDelegate.m
-classdumpgui_FRAMEWORKS = UIKit CoreGraphics QuartzCore
-classdumpgui_PRIVATE_FRAMEWORKS = Preferences
-classdumpgui_CFLAGS = -I./Headers/
-classdumpgui_LDFLAGS = -L./lib/
-classdumpgui_LIBRARIES = applist
+APPLICATION_NAME = ClassDumpGUI
+ClassDumpGUI_FILES = classdumpgui.m CDGViewController.m CDGAppDelegate.m
+ClassDumpGUI_FRAMEWORKS = UIKit CoreGraphics QuartzCore
+ClassDumpGUI_PRIVATE_FRAMEWORKS = Preferences
+ClassDumpGUI_LIBRARIES = applist
 
 TARGET_IPHONEOS_DEPLOYMENT_VERSION = 5.0
 

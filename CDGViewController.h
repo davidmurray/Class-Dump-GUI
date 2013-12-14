@@ -1,12 +1,12 @@
 #import <UIKit/UIKit.h>
-#import <AppList.h>
+#import "AppList/AppList.h"
 #import "UIProgressHUD.h"
 
 @interface CDGViewController : UITableViewController <UIAlertViewDelegate> {
 @private
 	ALApplicationTableDataSource *dataSource;
-    UIProgressHUD *HUD;
-    NSString *appDisplayName;
+	UIProgressHUD *HUD;
+	NSString *appDisplayName;
 }
 
 -(void)getApp:(NSString *)bundleID;

@@ -5,11 +5,11 @@
 	<key>CFBundleDisplayName</key>
 	<string>Class Dump</string>
 	<key>CFBundleExecutable</key>
-	<string>cd</string>
+	<string>ClassDumpGUI</string>
 	<key>CFBundleIconFile</key>
-	<string>cdg.png</string>
+	<string>Icon.png</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.jack.cdg</string>
+	<string>me.cykey.class-dump.gui</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
